@@ -1,0 +1,16 @@
+div {
+    font-size: 20px;
+}
+
+.title-one {
+    text-align: center;
+    background-color: ActiveBorder;
+}
+
+#save {
+    background-color: beige;
+}
+
+ul.one .li-one {
+    font-weight: bold;
+}
