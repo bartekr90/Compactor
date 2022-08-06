@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Compactor.Models.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,16 +17,23 @@ namespace Compactor.Controllers
         [AllowAnonymous]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-        [AllowAnonymous]
-        public ActionResult Contact()
+        public ActionResult ReservationList()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var reservationList = new List<Reservation>();
+            for (int i = 0; i < 10; i++)
+            {
+                reservationList.Add(new Reservation {
+                    Title = $"res nr. {i}",
+                    RentDate = DateTime.Now,
+                    ReturnDate = DateTime.MaxValue,
+                    Id = i,
+                    Value = i*2+30,
+                    UserData = new UserData { Name = "Eustachy Motyka"}
+                    });
+            }
+            return View(reservationList);
         }
     }
 }

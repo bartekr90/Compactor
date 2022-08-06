@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Wypożyczalnia sprzętu</title>
+    <title>@ViewBag.Title - Compactor - wypożyczalnia sprzętu budowlanego</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -13,7 +13,7 @@
         <div class="container">
 
 
-            <a class="navbar-brand" href="@Url.Action("Index","Home")">Strona główna</a>
+            <a class="navbar-brand" href="@Url.Action("Index","Home")">Zarezerwój</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,10 +21,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        @Html.ActionLink("O mnie", "About", "Home", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Moje rezerwacje", "ReservationList", "Home", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item active">
-                        @Html.ActionLink("Kontakt", "Contact", "Home", null, new { @class = "nav-link" })
+                        @Html.ActionLink("Informacje", "About", "Home", null, new { @class = "nav-link" })
                     </li>
                 </ul>
 
@@ -39,7 +39,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>Wypożyczalnia sprzętu budowlanego <b>Compactor</b> - &copy; @DateTime.Now.Year</p>
         </footer>
     </div>
 

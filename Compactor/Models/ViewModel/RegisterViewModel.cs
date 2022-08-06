@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Compactor.Models.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace Compactor.Models
 {
@@ -19,5 +20,10 @@ namespace Compactor.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Imię i nazwisko")]
+        public string Name { get; set; }
+        public Address Address { get; set; }
+
     }
 }
