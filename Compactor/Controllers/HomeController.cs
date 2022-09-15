@@ -1,4 +1,6 @@
 ﻿using Compactor.Models.Domain;
+using Compactor.Models.ViewModel;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,15 @@ namespace Compactor.Controllers
     {
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
+
+            //var initialVm = PrepareInitialViewModel(userId);
+
+            //return View(initialVm);
             return View();
         }
+
+
         [AllowAnonymous]
         public ActionResult About()
         {
@@ -24,16 +33,21 @@ namespace Compactor.Controllers
             var reservationList = new List<Reservation>();
             for (int i = 0; i < 10; i++)
             {
-                reservationList.Add(new Reservation {
+                reservationList.Add(new Reservation
+                {
                     Title = $"res nr. {i}",
                     RentDate = DateTime.Now,
                     ReturnDate = DateTime.MaxValue,
-                    Id = i,
-                    Value = i*2+30,
-                    UserData = new UserData { Name = "Eustachy Motyka"}
-                    });
+                    ID = i,
+                    Value = i * 2 + 30,
+                    UserData = new UserData { Name = "Eustachy Motyka" }
+                });
             }
             return View(reservationList);
         }
+
+
+
+
     }
 }

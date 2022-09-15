@@ -12,7 +12,7 @@ namespace Compactor.Models.Domain
         {
             ReservationPositions = new Collection<ReservationPosition>();
         }
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Required(ErrorMessage = "Pole tytuł jest wymagane!")]
         [Display(Name = "Tytuł:")]
@@ -32,12 +32,12 @@ namespace Compactor.Models.Domain
 
         [Required]
         [ForeignKey("User")]
-        public string IdUser { get; set; }
+        public string UserID { get; set; }
         public ApplicationUser User { get; set; }
 
         [Required]
         [ForeignKey("UserData")]
-        public int IdUserData { get; set; }
+        public int UserDataID { get; set; }
         public UserData UserData { get; set; }
 
         public ICollection<ReservationPosition> ReservationPositions { get; set; }

@@ -14,7 +14,7 @@ namespace Compactor.Models
 
         public DbSet<UserData> UserDatas { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
-        public DbSet<EquipmentGroup> EquipmentGroups { get; set; }
+        public DbSet<EquipmentType> EquipmentGroups { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationPosition> ReservationPositions { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -29,55 +29,55 @@ namespace Compactor.Models
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(x => x.Reservations)
                 .WithRequired(x => x.User)
-                .HasForeignKey(x => x.IdUser)
+                .HasForeignKey(x => x.UserID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(x => x.UserDatas)
                 .WithRequired(x => x.User)
-                .HasForeignKey(x => x.IdUser)
+                .HasForeignKey(x => x.UserID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Address>()
                 .HasMany(x => x.Users)
                 .WithRequired(x => x.Address)
-                .HasForeignKey(x => x.IdAddress)
+                .HasForeignKey(x => x.AddressID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Address>()
                 .HasMany(x => x.UserDatas)
                 .WithRequired(x => x.Address)
-                .HasForeignKey(x => x.IdAddress)
+                .HasForeignKey(x => x.AddressID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Equipment>()
                 .HasMany(x => x.ReservationPositions)
                 .WithRequired(x => x.Equipment)
-                .HasForeignKey(x => x.IdEquipment)
+                .HasForeignKey(x => x.EquipmentID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<EquipmentGroup>()
+            modelBuilder.Entity<EquipmentType>()
                 .HasMany(x => x.ReservationPositions)
-                .WithRequired(x => x.Group)
-                .HasForeignKey(x => x.IdGroup)
+                .WithRequired(x => x.Type)
+                .HasForeignKey(x => x.TypeID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<EquipmentGroup>()
+            modelBuilder.Entity<EquipmentType>()
                 .HasMany(x => x.Equipments)
-                .WithRequired(x => x.Group)
-                .HasForeignKey(x => x.IdGroup)
+                .WithRequired(x => x.Type)
+                .HasForeignKey(x => x.TypeID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Reservation>()
                 .HasMany(x => x.ReservationPositions)
                 .WithRequired(x => x.Reservation)
-                .HasForeignKey(x => x.IdReservation)
+                .HasForeignKey(x => x.ReservationID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.Reservations)
                 .WithRequired(x => x.UserData)
-                .HasForeignKey(x => x.IdUserData)
+                .HasForeignKey(x => x.UserDataID)
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);

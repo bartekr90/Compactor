@@ -6,7 +6,7 @@ namespace Compactor.Models.Domain
     public class ReservationPosition
     {
 
-        public int Id { get; set; }
+        public int ID { get; set; }
         public bool IsActiv { get; set; }
         [Required(ErrorMessage = "Pole lp jest wymagane!")]
         public int SequenceNumber { get; set; }
@@ -17,17 +17,17 @@ namespace Compactor.Models.Domain
 
         [Required]
         [ForeignKey("Equipment")]
-        public int IdEquipment { get; set; }
+        public int EquipmentID { get; set; }
         public Equipment Equipment { get; set; }
 
         [Required]
-        [ForeignKey("Group")]
-        public int IdGroup { get; set; }
-        public EquipmentGroup Group { get; set; }
+        [ForeignKey("Type")]
+        public int TypeID { get; set; }
+        public EquipmentType Type { get; set; }
 
         [Required]
         [ForeignKey("Reservation")]
-        public int IdReservation { get; set; }
+        public int ReservationID { get; set; }
         public Reservation Reservation { get; set; }
 
     }

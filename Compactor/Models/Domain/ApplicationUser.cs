@@ -22,7 +22,7 @@ namespace Compactor.Models
         public string Name { get; set; }
 
         [ForeignKey("Address")]
-        public int IdAddress { get; set; }
+        public int AddressID { get; set; }
         public Address Address { get; set; }
 
         public ICollection<UserData> UserDatas { get; set; }

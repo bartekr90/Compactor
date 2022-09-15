@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Compactor.Models.Domain
 {
-    public class EquipmentGroup
+    public class EquipmentType
     {
-        public EquipmentGroup()
+        public EquipmentType()
         {
             Equipments = new Collection<Equipment>();
             ReservationPositions = new Collection<ReservationPosition>();
         }
-        public int Id { get; set; }
+        public int ID { get; set; }
         [Required]
         public string Name { get; set; }
         public int BorrowedNumber { get; set; }

@@ -11,7 +11,7 @@ namespace Compactor.Models.Domain
         {
             ReservationPositions = new Collection<ReservationPosition>();
         }
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [Display(Name = "Nazwa")]
@@ -23,9 +23,9 @@ namespace Compactor.Models.Domain
         public bool IsRented { get; set; }
 
         [Required]
-        [ForeignKey("Group")]
-        public int IdGroup { get; set; }
-        public EquipmentGroup Group { get; set; }
+        [ForeignKey("Type")]
+        public int TypeID { get; set; }
+        public EquipmentType Type { get; set; }
         public ICollection<ReservationPosition> ReservationPositions { get; set; }
 
 

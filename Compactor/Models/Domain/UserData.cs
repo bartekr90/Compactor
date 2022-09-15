@@ -11,7 +11,7 @@ namespace Compactor.Models.Domain
         {
             Reservations = new Collection<Reservation>();
         }
-        public int Id { get; set; }
+        public int ID { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -19,14 +19,14 @@ namespace Compactor.Models.Domain
 
         [Required]
         [ForeignKey("User")]
-        public string IdUser { get; set; }
+        public string UserID { get; set; }
         public ApplicationUser User { get; set; }
 
         [ForeignKey("Address")]
-        public int IdAddress { get; set; }
+        public int AddressID { get; set; }
         public Address Address { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }
-       
+
     }
 }

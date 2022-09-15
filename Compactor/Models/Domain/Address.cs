@@ -12,7 +12,7 @@ namespace Compactor.Models.Domain
             Users = new Collection<ApplicationUser>();
         }
 
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [Display(Name = "Ulica")]
