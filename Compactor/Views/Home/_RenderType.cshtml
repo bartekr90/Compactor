@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Compactor.Models.Domain.EquipmentType>
+
+<h2 class="mb-3 mt-3">Dostępne towary:</h2>
+
+<table class="table table-bordered table-hover mt-3 mb-5">
+    <thead>
+        <tr>
+            <th scope="col">Zdj</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Cena/godz.</th>
+            <th scope="col">Dostępność</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var position in Model)
+        {
+            int accessibility = position.TotalNumber - position.BorrowedNumber;
+
+            <tr>
+                <td>
+                </td>
+                <td>
+                    @position.Name
+                </td>
+                <td>
+                    @position.Price
+                </td>
+                <td>
+                    @accessibility
+                </td>
+                <td>
+                    @if (accessibility > 0)
+                    {
+                        @Html.Partial("_RenderAddBtn", position)
+                    }
+                    else
+                    {
+                        <p>Sprzęt niedostępny</p>
+                    }
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<p>Update at @DateTime.Now</p>

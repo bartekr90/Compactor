@@ -8,9 +8,15 @@ namespace Compactor.Models.Domain
 {
     public class Reservation
     {
-        public Reservation()
+        public Reservation(string userID, ICollection<ReservationPosition> list)
         {
-            ReservationPositions = new Collection<ReservationPosition>();
+            ID = 0;
+            UserID = userID;
+            Value = 0;
+            Title = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+            RentDate = DateTime.Now;
+            ReturnDate = new DateTime();
+            ReservationPositions = list;
         }
         public int ID { get; set; }
 

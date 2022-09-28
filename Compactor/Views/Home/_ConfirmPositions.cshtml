@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Compactor.Models.Domain.ReservationPosition>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SequenceNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RentQuantity)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Type.Price)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SequenceNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type.Price)
+            </td>
+
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,65 @@
+﻿@using Compactor.Models.Domain
+@model List<ReservationPosition>
+
+@{
+    int lp = 0;
+    AjaxOptions ajaxDeleteOption = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "reservationPosition"
+    };
+}
+<h4 class="mb-3 mt-3">Wartość: @ViewData["modelValue"]</h4>
+<h2 class="mb-3 mt-3">Pozycje rezerwacji:</h2>
+
+<table class="table table-bordered table-hover mt-3 mb-5">
+    <thead>
+        <tr>
+            <th scope="col">Lp.</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Godz. Dodania</th>
+            <th scope="col">Cena/godz.</th>
+            <th scope="col">Ilość</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            lp = i;
+            lp++;
+            <tr>
+                <td>
+                    @lp
+                </td>
+                <td>
+                    @Model[i].Type.Name
+                </td>
+                <td>
+                    <p>@DateTime.Now.ToString("HH:mm:ss")</p>
+                </td>
+                <td>@Model[i].Type.Price</td>
+                <td>@Model[i].RentQuantity</td>
+                <td>
+                    @using (Ajax.BeginForm("OnDeletePosition", "Home", ajaxDeleteOption))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => i)
+                        <div class="form-actions no-color">
+                            <input type="submit" id="SubmitButton" class="btn btn-danger btn-sm" value="Usuń" />
+                        </div>
+                    }
+                </td>
+
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+<p>Update at @DateTime.Now</p>
+

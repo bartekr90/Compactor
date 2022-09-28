@@ -1,0 +1,19 @@
+﻿@model Compactor.Models.Domain.EquipmentType
+
+@{
+    AjaxOptions ajaxOption = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "reservationPosition"
+    };
+}
+
+
+
+@using (Ajax.BeginForm("OnAddPosition", "Home", ajaxOption))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => Model.ID)
+    <input type="submit" id="SubmitButton" class="btn btn-success btn-sm" value="Dodaj" />
+}
