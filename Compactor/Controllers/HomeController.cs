@@ -5,7 +5,6 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Compactor.Controllers
@@ -90,12 +89,7 @@ namespace Compactor.Controllers
             };
         }
 
-        //public ActionResult Index(Reservation res)
-        //{
-        //    //Reservation reservation = id == 0 ? GetNewReservation(userId) : _invoiceRepository.GetInvoice(id, userId);
-
-        //    return View(new InitialViewModel(new ReservationViewModel(res, userDataList), eqTypeList));
-        //}
+       
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -104,7 +98,14 @@ namespace Compactor.Controllers
             //Reservation reservation = id == 0 ? GetNewReservation(userId) : _invoiceRepository.GetInvoice(id, userId);
 
 
-            return View(new InitialViewModel(new ReservationViewModel(new Reservation(userId, GetCartSession()), userDataList), eqTypeList));
+            return View(
+                new InitialViewModel(
+                    new ReservationViewModel(
+                        new Reservation(
+                            userId,
+                            GetCartSession()),
+                        userDataList),
+                    eqTypeList));
         }
 
         [HttpPost]
@@ -135,12 +136,9 @@ namespace Compactor.Controllers
 
             if (eqType.IsInStock())
             {
-                var position = eqType.ConvertToReservationPos(cartSession);
-
+                var position = new ReservationPosition(eqType, cartSession);
                 cartSession.Add(position);
-
                 UpdateCartSession(cartSession);
-
                 return PartialView("_ReservationPositions", cartSession);
             }
             return RedirectToAction("Index");

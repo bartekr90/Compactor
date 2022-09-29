@@ -8,6 +8,10 @@ namespace Compactor.Models.Domain
 {
     public class Reservation
     {
+        public Reservation()
+        {
+            ReservationPositions = new Collection<ReservationPosition>();
+        }
         public Reservation(string userID, ICollection<ReservationPosition> list)
         {
             ID = 0;

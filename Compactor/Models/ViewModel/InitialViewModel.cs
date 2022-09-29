@@ -6,6 +6,10 @@ namespace Compactor.Models.ViewModel
 {
     public class InitialViewModel
     {
+        public InitialViewModel()
+        {
+            GroupList = new Collection<EquipmentType>();
+        }
         public InitialViewModel(ReservationViewModel vm, ICollection<EquipmentType> list)
         {
             Heading = vm.Reservation.ID == 0 ? "Zarezerwój" : "Rezerwacja";

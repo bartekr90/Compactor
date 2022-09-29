@@ -6,6 +6,10 @@ namespace Compactor.Models.ViewModel
 {
     public class ReservationViewModel
     {
+        public ReservationViewModel()
+        {
+            UserDataList = new Collection<UserData>();
+        }
         public ReservationViewModel(Reservation reservation, ICollection<UserData> list)
         {
             Reservation = reservation;

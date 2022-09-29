@@ -1,10 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Compactor.Models.Domain
 {
     public class ReservationPosition
     {
+        public ReservationPosition()
+        {
+
+        }
+        public ReservationPosition(EquipmentType eqType, List<ReservationPosition> list)
+        {
+            ID = 0;
+            RentQuantity = 1;
+            EquipmentID = 0;
+            TypeID = eqType.ID;
+            Type = eqType;
+            ReservationID = 0;
+            IsActiv = false;
+            SequenceNumber = list.Count() + 1;            
+        }
 
         public int ID { get; set; }
         public bool IsActiv { get; set; }
