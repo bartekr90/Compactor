@@ -11,6 +11,7 @@ namespace Compactor.Models.Domain
         {
             ReservationPositions = new Collection<ReservationPosition>();
         }
+        
         public int ID { get; set; }
 
         [Required]

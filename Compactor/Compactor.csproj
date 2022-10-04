@@ -167,6 +167,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\Repositories\EquipmentRepository.cs" />
+    <Compile Include="Models\Repositories\EquipmentTypeRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -193,6 +195,8 @@
     <Compile Include="Models\Domain\ReservationPosition.cs" />
     <Compile Include="Models\Domain\UserData.cs" />
     <Compile Include="Models\EquipmentTypeExtensions.cs" />
+    <Compile Include="Models\Repositories\ReservationRepository.cs" />
+    <Compile Include="Models\Repositories\UserDatasRepository.cs" />
     <Compile Include="Models\ReservationExtensions.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\ViewModel\AddPhoneNumberViewModel.cs" />

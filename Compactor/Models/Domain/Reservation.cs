@@ -22,6 +22,7 @@ namespace Compactor.Models.Domain
             ReturnDate = new DateTime();
             ReservationPositions = list;
         }
+        
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Pole tytuł jest wymagane!")]
@@ -49,6 +50,8 @@ namespace Compactor.Models.Domain
         [ForeignKey("UserData")]
         public int UserDataID { get; set; }
         public UserData UserData { get; set; }
+
+        //dodać prop create date i isActiv
 
         public ICollection<ReservationPosition> ReservationPositions { get; set; }
     }

@@ -11,20 +11,21 @@ namespace Compactor.Models.Domain
         {
 
         }
-        public ReservationPosition(EquipmentType eqType, List<ReservationPosition> list)
+        public ReservationPosition(Equipment equipment, List<ReservationPosition> list)
         {
             ID = 0;
             RentQuantity = 1;
-            EquipmentID = 0;
-            TypeID = eqType.ID;
-            Type = eqType;
-            ReservationID = 0;
+            EquipmentID = equipment.ID;
+            Equipment = equipment;
+            TypeID = equipment.TypeID;
+            Type = equipment.Type;
             IsActiv = false;
-            SequenceNumber = list.Count() + 1;            
+            SequenceNumber = list.Count() + 1;                   
         }
 
         public int ID { get; set; }
         public bool IsActiv { get; set; }
+
         [Required(ErrorMessage = "Pole lp jest wymagane!")]
         public int SequenceNumber { get; set; }
 
@@ -47,5 +48,6 @@ namespace Compactor.Models.Domain
         public int ReservationID { get; set; }
         public Reservation Reservation { get; set; }
 
+        //dodać userId
     }
 }

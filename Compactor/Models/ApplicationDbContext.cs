@@ -14,7 +14,7 @@ namespace Compactor.Models
 
         public DbSet<UserData> UserDatas { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
-        public DbSet<EquipmentType> EquipmentGroups { get; set; }
+        public DbSet<EquipmentType> EquipmentTypes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationPosition> ReservationPositions { get; set; }
         public DbSet<Address> Addresses { get; set; }

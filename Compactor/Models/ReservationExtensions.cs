@@ -40,5 +40,19 @@ namespace Compactor.Models
             }
             return true;
         }
+
+        public static bool PreparePositionsToSave(this Reservation reservation, int reservationID)
+        {
+            foreach (var position in reservation.ReservationPositions)
+            {
+                if (position.ID != 0)
+                    return false;
+                
+                position.ReservationID = reservationID;
+                position.IsActiv = true;
+                position.Equipment.IsRented = true;
+            }
+            return true;
+        }
     }
 }

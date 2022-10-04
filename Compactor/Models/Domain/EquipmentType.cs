@@ -19,5 +19,7 @@ namespace Compactor.Models.Domain
         public decimal Price { get; set; }
         public ICollection<Equipment> Equipments { get; set; }
         public ICollection<ReservationPosition> ReservationPositions { get; set; }
+
+        //dodac AvailableNumber
     }
 }
