@@ -41,16 +41,15 @@ namespace Compactor.Models
             return true;
         }
 
-        public static bool PreparePositionsToSave(this Reservation reservation, int reservationID)
+        public static bool PreparePositionsToSave(this Reservation reservation)
         {
             foreach (var position in reservation.ReservationPositions)
             {
                 if (position.ID != 0)
                     return false;
-                
-                position.ReservationID = reservationID;
+                position.Type = null;
+                position.Equipment = null;
                 position.IsActiv = true;
-                position.Equipment.IsRented = true;
             }
             return true;
         }

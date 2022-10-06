@@ -10,10 +10,10 @@ namespace Compactor.Models.ViewModel
         {
             UserDataList = new Collection<UserData>();
         }
-        public ReservationViewModel(Reservation reservation, ICollection<UserData> list)
+        public ReservationViewModel(Reservation reservation, ICollection<UserData> addressList)
         {
             Reservation = reservation;
-            UserDataList = list;
+            UserDataList = addressList;
         }
         public Reservation Reservation { get; set; }
         public ICollection<UserData> UserDataList { get; set; }

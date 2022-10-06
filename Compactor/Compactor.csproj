@@ -383,12 +383,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Home\_ConfirmPositions.cshtml" />
+    <Content Include="Views\Home\_Positions.cshtml" />
     <Content Include="Views\Home\_RenderAddBtn.cshtml" />
     <Content Include="Views\Home\_RenderType.cshtml" />
     <Content Include="Views\Home\_Reservation.cshtml" />
     <Content Include="Views\Home\_ReservationPositions.cshtml" />
-    <Content Include="Views\Home\ConfirmReservation.cshtml" />
+    <Content Include="Views\Home\Reservation.cshtml" />
+    <Content Include="Views\Home\ReservationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

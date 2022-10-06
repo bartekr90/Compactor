@@ -27,6 +27,7 @@ namespace Compactor.Models.Domain
         public bool IsActiv { get; set; }
 
         [Required(ErrorMessage = "Pole lp jest wymagane!")]
+        [Display(Name = "Lp:")]
         public int SequenceNumber { get; set; }
 
         [Required(ErrorMessage = "Pole Ilość jest wymagane!")]

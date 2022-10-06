@@ -11,13 +11,22 @@ namespace Compactor.Models.Domain
             Equipments = new Collection<Equipment>();
             ReservationPositions = new Collection<ReservationPosition>();
         }
+
         public int ID { get; set; }
+
         [Required]
+        [Display(Name = "Nazwa:")]
         public string Name { get; set; }
+
         public int BorrowedNumber { get; set; }
+
         public int TotalNumber { get; set; }
+
+        [Display(Name = "Cena za godzinę:")]
         public decimal Price { get; set; }
+
         public ICollection<Equipment> Equipments { get; set; }
+
         public ICollection<ReservationPosition> ReservationPositions { get; set; }
 
         //dodac AvailableNumber

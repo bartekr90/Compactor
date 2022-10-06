@@ -38,6 +38,22 @@ namespace Compactor.Controllers
                     eqTypeList));
         }
 
+        public ActionResult ReservationList()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var reservationList = _reservationRepository.GetListofReservations(userId);
+
+            return View(reservationList);
+        }
+
+        public ActionResult Reservation(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            return View(_reservationRepository.GetReservation(userId, id));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PrepareReservation(Reservation reservation)
@@ -48,32 +64,29 @@ namespace Compactor.Controllers
                 if (reservation.AssignValue(Convert.ToDecimal(reservation.GetHours())))
                 {
                     TempData["reservation"] = reservation;
-                    return View("ConfirmReservation", reservation);
+                    UpdateCartSession(new List<ReservationPosition>());
+                    return View("Reservation", reservation);
                 }
 
             }
-            return RedirectToAction("Index", reservation);
-            //mozna zrobić przekazanie reservation do index, ale musi byc nullable
-            //przygotowanie akcji post z dodaniem rezerwacji do bazy
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        [ChildActionOnly]
-        [ValidateAntiForgeryToken]
-        public ActionResult Reservation()
+        public ActionResult AddReservation()
         {
             Reservation reservation = (Reservation)TempData["reservation"];
             var userID = User.Identity.GetUserId();
 
-            if (reservation.UserID != userID || Utils.IsAny(reservation.ReservationPositions) || reservation.ID == 0)
+            if (reservation == null || !Utils.IsAny(reservation.ReservationPositions) || reservation.UserID != userID)
                 return RedirectToAction("Index");
 
-            _reservationRepository.Add(reservation);
-
-            if (reservation.PreparePositionsToSave(_reservationRepository.GetIdOfEmptyRes(userID)))
-                _reservationRepository.AddPositionsToRes(reservation.ReservationPositions, userID);
-
-            UpdateCartSession(new List<ReservationPosition>());
+            if (reservation.PreparePositionsToSave())
+            {
+                _reservationRepository.Add(reservation);
+                _equipmentRepository.UpdateStates(reservation.ReservationPositions);
+                _typeRepository.UpdateBorrowedNr(reservation.ReservationPositions);
+            }
 
             return RedirectToAction("Index");
         }

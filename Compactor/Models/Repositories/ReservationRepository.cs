@@ -26,41 +26,16 @@ namespace Compactor.Models.Repositories
             }
         }
 
-        public int GetIdOfEmptyRes(string userID)
+        public Reservation GetReservation(string userId, int id)
         {
             using (var context = new ApplicationDbContext())
             {
-                //var reservations = context.Reservations
-                //    .Include(x => x.ReservationPositions)
-                //    .Where(x => x.UserID == userID)
-                //    .ToList();
-
-                //var reservation = reservations
-                //    .FirstOrDefault(x => Utils.IsAny(x.ReservationPositions));
-
-                var reservation = context.Reservations
+                return context.Reservations
                     .Include(x => x.ReservationPositions)
-                    .Where(x => x.UserID == userID && Utils.IsAny(x.ReservationPositions))
-                    .Single();
-
-                return reservation.ID;
+                    .Include(x => x.ReservationPositions.Select(y => y.Type))
+                    .Single(x => x.UserID == userId && x.ID == id); 
             }
         }
 
-        public void AddPositionsToRes(ICollection<ReservationPosition> reservationPositions, string userID)
-        {
-            using (var context = new ApplicationDbContext())
-            {                
-                var reservation = context.Reservations.Single(x =>
-                       x.ID == reservationPositions.FirstOrDefault().ReservationID &&
-                       x.UserID == userID);
-
-                foreach (var item in reservationPositions)
-                {
-                    context.ReservationPositions.Add(item);
-                }
-                context.SaveChanges();
-            }
-        }
     }
 }
