@@ -56,13 +56,30 @@
 @Html.Partial("_Positions", Model.ReservationPositions)
 
 <hr />
-<div>
-    @using (Html.BeginForm("AddReservation", "Home", FormMethod.Post))
-    {
-        <input type="submit" value="Create" class="btn btn-primary mb-3 mt-3" />
-    }
-</div>
 
+
+@if (Model.ID == 0)
+{
+    <div>
+        @using (Html.BeginForm("AddReservation", "Home", FormMethod.Post))
+        {
+            <input type="submit" value="Zarezerwój" class="btn btn-primary mb-3 mt-3" />
+        }
+
+    </div>
+}
+else
+{
+<div>
+    @using (Html.BeginForm("CloseReservation", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.ID)
+        <input type="submit" value="Zamknij rezerwację" class="btn btn-primary mb-3 mt-3" />
+    }
+
+</div>
+}
 <p>
 
     @Html.ActionLink("Back to List", "Index")

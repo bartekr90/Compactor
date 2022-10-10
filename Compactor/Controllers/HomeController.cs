@@ -16,17 +16,18 @@ namespace Compactor.Controllers
         private readonly UserDatasRepository _userDataRepository = new UserDatasRepository();
         private readonly EquipmentTypeRepository _typeRepository = new EquipmentTypeRepository();
         private readonly ReservationRepository _reservationRepository = new ReservationRepository();
-        private readonly EquipmentRepository _equipmentRepository = new EquipmentRepository();
+        private readonly DeviceRepository _deviceRepository = new DeviceRepository();
 
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
 
             List<UserData> userDataList = _userDataRepository.GetListOfData(userId);
+
+            if(!Utils.IsAny(userDataList))            
+                userDataList.Add(_userDataRepository.PrepareFirstEntity(userId));
+            
             List<EquipmentType> eqTypeList = _typeRepository.GetListOfTypes();
-
-            //Reservation reservation = id == 0 ? GetNewReservation(userId) : _invoiceRepository.GetInvoice(id, userId);
-
 
             return View(
                 new InitialViewModel(
@@ -58,16 +59,20 @@ namespace Compactor.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult PrepareReservation(Reservation reservation)
         {
+            var userID = User.Identity.GetUserId();
+
+            if(reservation.UserID != userID)
+                return RedirectToAction("Index");
+
             reservation.ReservationPositions = GetCartSession();
+
             if (ModelState.IsValid && Utils.IsAny(reservation.ReservationPositions))
             {
                 if (reservation.AssignValue(Convert.ToDecimal(reservation.GetHours())))
                 {
                     TempData["reservation"] = reservation;
-                    UpdateCartSession(new List<ReservationPosition>());
                     return View("Reservation", reservation);
                 }
-
             }
             return RedirectToAction("Index");
         }
@@ -75,32 +80,51 @@ namespace Compactor.Controllers
         [HttpPost]
         public ActionResult AddReservation()
         {
+            UpdateCartSession(new List<ReservationPosition>());
             Reservation reservation = (Reservation)TempData["reservation"];
-            var userID = User.Identity.GetUserId();
 
+            var userID = User.Identity.GetUserId();
             if (reservation == null || !Utils.IsAny(reservation.ReservationPositions) || reservation.UserID != userID)
                 return RedirectToAction("Index");
 
             if (reservation.PreparePositionsToSave())
             {
+                reservation.IsActiv = true;
                 _reservationRepository.Add(reservation);
-                _equipmentRepository.UpdateStates(reservation.ReservationPositions);
-                _typeRepository.UpdateBorrowedNr(reservation.ReservationPositions);
+                _deviceRepository.UpdateStates(reservation.ReservationPositions);
+                _typeRepository.UpdateBorrowedNr(reservation.ReservationPositions, UpdateMode.Add);
             }
-
-            return RedirectToAction("Index");
+            return RedirectToAction("ReservationList");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CloseReservation(int id)
+        {
+            var userID = User.Identity.GetUserId();
+
+            var list = _reservationRepository.CloseReservation(userID, id);
+
+            if (Utils.IsAny(list))
+            {
+                _deviceRepository.UpdateStates(list);
+                _typeRepository.UpdateBorrowedNr(list, UpdateMode.Subtract);
+            }
+            return RedirectToAction("ReservationList");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult OnAddPosition(int id)
         {
             List<ReservationPosition> cartSession = GetCartSession();
-            Equipment equipment = _equipmentRepository.GetFirstEqWithIdOf(id);
+            Device device = _deviceRepository.GetFirstEqWithIdOf(id);
 
-            if (equipment.Type.IsInStock())
+            if (device.Type.IsInStock())
             {
-                var position = new ReservationPosition(equipment, cartSession);
+                var userID = User.Identity.GetUserId();
+                var position = new ReservationPosition(device, cartSession, userID);
                 cartSession.Add(position);
                 UpdateCartSession(cartSession);
                 return PartialView("_ReservationPositions", cartSession);
@@ -124,13 +148,11 @@ namespace Compactor.Controllers
             return PartialView("_ReservationPositions", cartSession);
         }
 
-
         [AllowAnonymous]
         public ActionResult About()
         {
             return View();
         }
-
 
         private void UpdateCartSession(List<ReservationPosition> list)
         {
@@ -142,8 +164,6 @@ namespace Compactor.Controllers
                 return (List<ReservationPosition>)Session["Cart"];
             return new List<ReservationPosition>();
         }
-
-
 
     }
 }

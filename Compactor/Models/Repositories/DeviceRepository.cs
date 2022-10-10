@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace Compactor.Controllers
 {
-    public class EquipmentRepository
+    public class DeviceRepository
     {
-        public Equipment GetFirstEqWithIdOf(int typeId)
+        public Device GetFirstEqWithIdOf(int typeId)
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Equipments
+                return context.Devices
                     .Include(eq => eq.Type)
                     .FirstOrDefault(eq => eq.TypeID == typeId && eq.IsRented == false);
             }
@@ -25,8 +25,8 @@ namespace Compactor.Controllers
             {
                 foreach (var item in reservationPositions)
                 {
-                    var eqToUpdate = context.Equipments
-                        .Single(x => x.ID == item.EquipmentID);
+                    var eqToUpdate = context.Devices
+                        .Single(x => x.ID == item.DeviceID);
 
                     eqToUpdate.IsRented = item.IsActiv;
                 }

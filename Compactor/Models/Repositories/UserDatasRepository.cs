@@ -18,5 +18,33 @@ namespace Compactor.Models.Repositories
                     .ToList();
             }
         }
+
+        public UserData PrepareFirstEntity(string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users.Single(x => x.Id == userId);
+               
+                var data = new UserData
+                {
+                    ID = 0,
+                    AddressID = user.AddressID,
+                    Email = user.Email,
+                    UserID = user.Id,
+                    Name = user.Name
+                };
+                Add(data);
+                return data;
+            }
+        }
+
+        public void Add(UserData data)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                context.UserDatas.Add(data);
+                context.SaveChanges();
+            }
+        }
     }
 }

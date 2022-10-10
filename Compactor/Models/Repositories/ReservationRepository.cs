@@ -37,5 +37,27 @@ namespace Compactor.Models.Repositories
             }
         }
 
+        public List<ReservationPosition> CloseReservation(string userId, int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+               var reservation = context.Reservations
+                    .Include(x => x.ReservationPositions)
+                    .Single(x => x.UserID == userId && x.ID == id);
+
+                if (!Utils.IsAny(reservation.ReservationPositions))
+                    return new List<ReservationPosition>();                
+
+                foreach (var position in reservation.ReservationPositions)
+                {
+                    position.IsActiv = false;  
+                }
+                //reservation.isactiv = false;
+                context.SaveChanges();
+
+                return reservation.ReservationPositions.ToList();
+            }
+
+        }
     }
 }

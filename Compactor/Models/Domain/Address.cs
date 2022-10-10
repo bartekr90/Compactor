@@ -19,7 +19,7 @@ namespace Compactor.Models.Domain
         public string Street { get; set; }
 
         [Required]
-        [Display(Name = "Numer")]
+        [Display(Name = "Numer mieszkania/domu")]
         public string Number { get; set; }
 
         [Required]

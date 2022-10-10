@@ -33,6 +33,9 @@ namespace Compactor.Models.Domain
         [Display(Name = "Wartość:")]
         public decimal Value { get; set; }
 
+        [Display(Name = "Aktywna:")]
+        public bool IsActiv { get; set; }
+
         [Required(ErrorMessage = "Pole data wypożycznenia jest wymagane!")]
         [Display(Name = "Data wypożycznenia:")]
         public DateTime RentDate { get; set; }
@@ -50,8 +53,6 @@ namespace Compactor.Models.Domain
         [ForeignKey("UserData")]
         public int UserDataID { get; set; }
         public UserData UserData { get; set; }
-
-        //dodać prop create date i isActiv
 
         public ICollection<ReservationPosition> ReservationPositions { get; set; }
     }

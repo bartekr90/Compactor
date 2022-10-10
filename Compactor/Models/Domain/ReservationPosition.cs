@@ -11,15 +11,16 @@ namespace Compactor.Models.Domain
         {
 
         }
-        public ReservationPosition(Equipment equipment, List<ReservationPosition> list)
+        public ReservationPosition(Device device, List<ReservationPosition> list, string userId)
         {
             ID = 0;
             RentQuantity = 1;
-            EquipmentID = equipment.ID;
-            Equipment = equipment;
-            TypeID = equipment.TypeID;
-            Type = equipment.Type;
+            DeviceID = device.ID;
+            Device = device;
+            TypeID = device.TypeID;
+            Type = device.Type;
             IsActiv = false;
+            UserID = userId;
             SequenceNumber = list.Count() + 1;                   
         }
 
@@ -35,9 +36,9 @@ namespace Compactor.Models.Domain
         public int RentQuantity { get; set; }
 
         [Required]
-        [ForeignKey("Equipment")]
-        public int EquipmentID { get; set; }
-        public Equipment Equipment { get; set; }
+        [ForeignKey("Device")]
+        public int DeviceID { get; set; }
+        public Device Device { get; set; }
 
         [Required]
         [ForeignKey("Type")]
@@ -49,6 +50,9 @@ namespace Compactor.Models.Domain
         public int ReservationID { get; set; }
         public Reservation Reservation { get; set; }
 
-        //dodać userId
+        [Required]
+        [ForeignKey("User")]
+        public string UserID { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

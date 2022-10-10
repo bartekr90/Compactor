@@ -8,7 +8,7 @@ namespace Compactor.Models.Domain
     {
         public EquipmentType()
         {
-            Equipments = new Collection<Equipment>();
+            Devices = new Collection<Device>();
             ReservationPositions = new Collection<ReservationPosition>();
         }
 
@@ -25,10 +25,9 @@ namespace Compactor.Models.Domain
         [Display(Name = "Cena za godzinę:")]
         public decimal Price { get; set; }
 
-        public ICollection<Equipment> Equipments { get; set; }
+        public ICollection<Device> Devices { get; set; }
 
         public ICollection<ReservationPosition> ReservationPositions { get; set; }
 
-        //dodac AvailableNumber
     }
 }

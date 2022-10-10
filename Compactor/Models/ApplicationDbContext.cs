@@ -13,7 +13,7 @@ namespace Compactor.Models
         }
 
         public DbSet<UserData> UserDatas { get; set; }
-        public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<Device> Devices { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationPosition> ReservationPositions { get; set; }
@@ -50,10 +50,10 @@ namespace Compactor.Models
                 .HasForeignKey(x => x.AddressID)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Equipment>()
+            modelBuilder.Entity<Device>()
                 .HasMany(x => x.ReservationPositions)
-                .WithRequired(x => x.Equipment)
-                .HasForeignKey(x => x.EquipmentID)
+                .WithRequired(x => x.Device)
+                .HasForeignKey(x => x.DeviceID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<EquipmentType>()
@@ -63,7 +63,7 @@ namespace Compactor.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<EquipmentType>()
-                .HasMany(x => x.Equipments)
+                .HasMany(x => x.Devices)
                 .WithRequired(x => x.Type)
                 .HasForeignKey(x => x.TypeID)
                 .WillCascadeOnDelete(false);

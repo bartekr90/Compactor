@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Compactor.Models.Domain
 {
-    public class Equipment
+    public class Device
     {
-        public Equipment()
+        public Device()
         {
             ReservationPositions = new Collection<ReservationPosition>();
         }

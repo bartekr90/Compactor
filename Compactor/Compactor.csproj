@@ -167,7 +167,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Models\Repositories\EquipmentRepository.cs" />
+    <Compile Include="Migrations\202210101725393_FromEquipmentToDevice_AddedIsActivInReservation_UserIdInPosition.cs" />
+    <Compile Include="Migrations\202210101725393_FromEquipmentToDevice_AddedIsActivInReservation_UserIdInPosition.designer.cs">
+      <DependentUpon>202210101725393_FromEquipmentToDevice_AddedIsActivInReservation_UserIdInPosition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Repositories\DeviceRepository.cs" />
     <Compile Include="Models\Repositories\EquipmentTypeRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -189,7 +193,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domain\Address.cs" />
     <Compile Include="Models\Domain\ApplicationUser.cs" />
-    <Compile Include="Models\Domain\Equipment.cs" />
+    <Compile Include="Models\Domain\Device.cs" />
     <Compile Include="Models\Domain\EquipmentType.cs" />
     <Compile Include="Models\Domain\Reservation.cs" />
     <Compile Include="Models\Domain\ReservationPosition.cs" />
@@ -414,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209151636278_ChangePropertyNames.resx">
       <DependentUpon>202209151636278_ChangePropertyNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210101725393_FromEquipmentToDevice_AddedIsActivInReservation_UserIdInPosition.resx">
+      <DependentUpon>202210101725393_FromEquipmentToDevice_AddedIsActivInReservation_UserIdInPosition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

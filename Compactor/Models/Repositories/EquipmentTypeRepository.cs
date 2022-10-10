@@ -6,6 +6,11 @@ using System.Linq;
 
 namespace Compactor.Controllers
 {
+    public enum UpdateMode
+    {
+        Add, Subtract
+    }
+
     public class EquipmentTypeRepository
     {
         public List<EquipmentType> GetListOfTypes()
@@ -16,7 +21,7 @@ namespace Compactor.Controllers
             }
         }
 
-        public void UpdateBorrowedNr(ICollection<ReservationPosition> reservationPositions)
+        public void UpdateBorrowedNr(ICollection<ReservationPosition> reservationPositions, UpdateMode mode)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -25,7 +30,19 @@ namespace Compactor.Controllers
                     var typeToUpdate = context.EquipmentTypes
                         .Single(x => x.ID == item.TypeID);
 
-                    typeToUpdate.BorrowedNumber = item.RentQuantity;
+                    if (typeToUpdate.BorrowedNumber <= 0)
+                        continue;
+                    
+                    switch (mode)
+                    {
+                        case UpdateMode.Add:
+                            typeToUpdate.BorrowedNumber += item.RentQuantity;
+                            break;
+                        case UpdateMode.Subtract:
+                            typeToUpdate.BorrowedNumber -= item.RentQuantity;
+                            break;                        
+                    }
+
                 }
                 context.SaveChanges();
             }

@@ -48,7 +48,7 @@ namespace Compactor.Models
                 if (position.ID != 0)
                     return false;
                 position.Type = null;
-                position.Equipment = null;
+                position.Device = null;
                 position.IsActiv = true;
             }
             return true;
