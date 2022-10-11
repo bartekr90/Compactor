@@ -6,9 +6,24 @@ namespace Compactor.Models
 {
     public static class EquipmentTypeExtensions
     {
-        public static bool IsInStock(this EquipmentType data)
+        public static bool IsInStock(this EquipmentType type, ICollection<ReservationPosition> positionsToCheck)
         {
-            return data.TotalNumber - data.BorrowedNumber > 0;
+            if (type == null)
+                return false;
+            int i = 0;
+
+            if (!Utils.IsAny(positionsToCheck))
+                goto End;
+
+            var list = positionsToCheck.Where(x => x.TypeID == type.ID);
+
+            foreach (var position in list)
+            {
+                i += position.RentQuantity;
+            }
+
+            End:
+            return type.TotalNumber >= type.BorrowedNumber+i;
         }               
     }
 }

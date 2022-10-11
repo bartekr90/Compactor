@@ -1,65 +1,108 @@
 ﻿@model IEnumerable<Compactor.Models.Domain.Reservation>
 
-<body>
-   
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Value)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.UserDataID)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.Title)*@
-                <a class="font-weight-bold"
-                   href="@Url.Action("Reservation", "Home",
-                                new { id =item.ID })">
-                    @item.Title
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comments)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.UserDataID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
+@helper ShowReservations(IEnumerable<Compactor.Models.Domain.Reservation> list, bool activMode)
+{
+    int elements = 0;
+    foreach (var item in list)
+    {
+        if (item.IsActiv != activMode)
+        {
+            elements++;
+        }
     }
-    
-    </table>
-</body>
+    if (elements == list.Count())
+    {
+        return;
+    }
 
+    if (activMode == true)
+    {
+        <h4>Aktywne rezerwacje:</h4>
+    }
+    else
+    {
+        <h4>Zamknięte rezerwacje: </h4>
+    }
+
+    <body>
+
+        <table class="table table-bordered table-hover mt-3 mb-5">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Value)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RentDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReturnDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserData.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserData.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserData.Address)
+                </th>
+            </tr>
+
+            @foreach (var item in list)
+            {
+                if (item.IsActiv != activMode)
+                {
+                    continue;
+                }
+                <tr>
+                    <td>
+                        <a class="font-weight-bold"
+                           href="@Url.Action("Reservation", "Home",
+                                new { id =item.ID })">
+                            @item.Title
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReturnDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserData.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserData.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserData.Address.Street)
+                        @Html.DisplayFor(modelItem => item.UserData.Address.Number)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.UserData.Address.City)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.UserData.Address.PostalCode)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </body>
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+    @ShowReservations(Model, true);
+    @ShowReservations(Model, false);
+}

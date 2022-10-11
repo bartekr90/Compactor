@@ -13,7 +13,10 @@ namespace Compactor.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Reservations.Where(x => x.UserID == userId).ToList();
+                return context.Reservations
+                    .Include(x => x.UserData)
+                    .Include(x => x.UserData.Address)
+                    .Where(x => x.UserID == userId).ToList();
             }
         }
 
@@ -52,7 +55,7 @@ namespace Compactor.Models.Repositories
                 {
                     position.IsActiv = false;  
                 }
-                //reservation.isactiv = false;
+                reservation.IsActiv = false;
                 context.SaveChanges();
 
                 return reservation.ReservationPositions.ToList();

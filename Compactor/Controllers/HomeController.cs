@@ -24,9 +24,9 @@ namespace Compactor.Controllers
 
             List<UserData> userDataList = _userDataRepository.GetListOfData(userId);
 
-            if(!Utils.IsAny(userDataList))            
+            if (!Utils.IsAny(userDataList))
                 userDataList.Add(_userDataRepository.PrepareFirstEntity(userId));
-            
+
             List<EquipmentType> eqTypeList = _typeRepository.GetListOfTypes();
 
             return View(
@@ -61,7 +61,7 @@ namespace Compactor.Controllers
         {
             var userID = User.Identity.GetUserId();
 
-            if(reservation.UserID != userID)
+            if (reservation.UserID != userID)
                 return RedirectToAction("Index");
 
             reservation.ReservationPositions = GetCartSession();
@@ -87,13 +87,13 @@ namespace Compactor.Controllers
             if (reservation == null || !Utils.IsAny(reservation.ReservationPositions) || reservation.UserID != userID)
                 return RedirectToAction("Index");
 
-            if (reservation.PreparePositionsToSave())
-            {
-                reservation.IsActiv = true;
-                _reservationRepository.Add(reservation);
-                _deviceRepository.UpdateStates(reservation.ReservationPositions);
-                _typeRepository.UpdateBorrowedNr(reservation.ReservationPositions, UpdateMode.Add);
-            }
+            if (!reservation.PreparePositionsToSave())
+                return RedirectToAction("Index");
+
+            reservation.IsActiv = true;
+            _reservationRepository.Add(reservation);
+            _deviceRepository.UpdateStates(reservation.ReservationPositions);
+            _typeRepository.UpdateBorrowedNr(reservation.ReservationPositions, UpdateMode.Add);
             return RedirectToAction("ReservationList");
         }
 
@@ -121,15 +121,32 @@ namespace Compactor.Controllers
             List<ReservationPosition> cartSession = GetCartSession();
             Device device = _deviceRepository.GetFirstEqWithIdOf(id);
 
-            if (device.Type.IsInStock())
+            if (device == null)
+                return PartialView("_ReservationPositions", cartSession);
+
+            var userID = User.Identity.GetUserId();
+            var position = new ReservationPosition(device, cartSession, userID);
+            cartSession.Add(position);
+
+            if (!device.Type.IsInStock(cartSession))
             {
-                var userID = User.Identity.GetUserId();
-                var position = new ReservationPosition(device, cartSession, userID);
-                cartSession.Add(position);
-                UpdateCartSession(cartSession);
+                cartSession.Remove(position);
                 return PartialView("_ReservationPositions", cartSession);
             }
-            return RedirectToAction("Index");
+
+            UpdateCartSession(cartSession);
+            return PartialView("_ReservationPositions", cartSession);
+
+
+
+            //ten kod generuje błędny wynik, zawsze zwraca sesje z większą liczbą elementów
+            //czy metoda update cart session jest wgle potrzebna?
+
+            //if (!device.Type.IsInStock(cartSession))
+            //    return PartialView("_ReservationPositions", GetCartSession());
+
+            //UpdateCartSession(cartSession);
+            //return PartialView("_ReservationPositions", cartSession);
         }
 
         [HttpPost]
@@ -140,7 +157,7 @@ namespace Compactor.Controllers
             var length = cartSession.Count();
 
             if (i < 0 && i > length)
-                return RedirectToAction("Index");
+                return PartialView("_ReservationPositions", cartSession);
 
             cartSession.RemoveAt(i);
             UpdateCartSession(cartSession);

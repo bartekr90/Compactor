@@ -13,6 +13,8 @@ namespace Compactor.Models.Domain
         }
         public int ID { get; set; }
         [Required]
+
+        [Display(Name = "Imie i nazwisko:")]
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }
@@ -24,6 +26,8 @@ namespace Compactor.Models.Domain
 
         [ForeignKey("Address")]
         public int AddressID { get; set; }
+
+        [Display(Name = "Adres:")]
         public Address Address { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }

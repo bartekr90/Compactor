@@ -43,9 +43,12 @@ namespace Compactor.Models
 
         public static bool PreparePositionsToSave(this Reservation reservation)
         {
+            
             foreach (var position in reservation.ReservationPositions)
             {
                 if (position.ID != 0)
+                    return false;
+                if (!position.Type.IsInStock(reservation.ReservationPositions))
                     return false;
                 position.Type = null;
                 position.Device = null;

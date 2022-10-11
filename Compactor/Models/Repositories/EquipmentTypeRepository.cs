@@ -28,10 +28,7 @@ namespace Compactor.Controllers
                 foreach (var item in reservationPositions)
                 {
                     var typeToUpdate = context.EquipmentTypes
-                        .Single(x => x.ID == item.TypeID);
-
-                    if (typeToUpdate.BorrowedNumber <= 0)
-                        continue;
+                        .Single(x => x.ID == item.TypeID);                   
                     
                     switch (mode)
                     {
@@ -43,6 +40,8 @@ namespace Compactor.Controllers
                             break;                        
                     }
 
+                    if (typeToUpdate.BorrowedNumber < 0)
+                        throw new Exception();
                 }
                 context.SaveChanges();
             }
