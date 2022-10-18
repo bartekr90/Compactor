@@ -12,11 +12,10 @@ namespace Compactor.Models.ViewModel
         }
         public InitialViewModel(ReservationViewModel vm, ICollection<EquipmentType> list)
         {
-            Heading = vm.Reservation.ID == 0 ? "Zarezerwój" : "Rezerwacja";
             GroupList = list;
             ReservationVM = vm;
         }
-        public string Heading { get; set; }
+        public string Information { get; set; }
         public ReservationViewModel ReservationVM { get; set; }
         public ICollection<EquipmentType> GroupList { get; set; }
     }

@@ -1,13 +1,19 @@
 ﻿@model Compactor.Models.ViewModel.InitialViewModel
 @{
-    ViewBag.Title = "Zarezerwój";
+    ViewBag.Title = "Zarezerwuj";
 }
 
-<h3>@Model.Heading</h3>
+<h1 class="mb-3">@ViewBag.Title</h1>
+<hr />
 
 <div class="row">
+    @if (Model.Information != null)
+    {
+        <p class="alert alert-info mt-1 mb-3">
+            <strong>@Model.Information</strong>  
+        </p>
+    }
     @Html.Partial("_Reservation", Model.ReservationVM)
-    <hr />
 </div>
 
 <div class="row">

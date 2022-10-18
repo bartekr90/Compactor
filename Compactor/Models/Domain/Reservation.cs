@@ -26,7 +26,7 @@ namespace Compactor.Models.Domain
 
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Pole tytuł jest wymagane!")]
+        [Required]
         [Display(Name = "Tytuł:")]
         public string Title { get; set; }
 
@@ -38,7 +38,7 @@ namespace Compactor.Models.Domain
 
         [Display(Name = "Aktywna:")]
         public bool IsActiv { get; set; }
-
+               
         [Required(ErrorMessage = "Pole data wypożycznenia jest wymagane!")]
         [Display(Name = "Data wypożycznenia:")]
         public DateTime RentDate { get; set; }
@@ -54,6 +54,7 @@ namespace Compactor.Models.Domain
 
         [Required]
         [ForeignKey("UserData")]
+        [Display(Name = "Rezerwacja na nazwisko:")]
         public int UserDataID { get; set; }
         public UserData UserData { get; set; }
 

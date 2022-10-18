@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<Compactor.Models.Domain.Reservation>
+@{
+    ViewBag.Title = "Lista rezerwacji";
+}
 
 @helper ShowReservations(IEnumerable<Compactor.Models.Domain.Reservation> list, bool activMode)
 {
@@ -100,9 +103,14 @@
         </table>
     </body>
 }
+<h2 class="mb-3">@ViewBag.Title</h2>
+<hr />
 
 @if (Model != null && Model.Count() > 0)
 {
     @ShowReservations(Model, true);
     @ShowReservations(Model, false);
+}
+else { 
+<h4>Nie masz jeszcze żadnej rezerwacji.</h4>
 }
