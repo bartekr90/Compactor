@@ -14,7 +14,7 @@ namespace Compactor.Controllers
             {
                 return context.Devices
                     .Include(eq => eq.Type)
-                    .FirstOrDefault(eq => eq.TypeID == typeId && eq.IsRented == false);
+                    .FirstOrDefault(eq => eq.TypeID == typeId && eq.IsRented == false && eq.Type.TotalNumber > eq.Type.BorrowedNumber);
             }
         }
 
