@@ -123,7 +123,7 @@ namespace Compactor.Controllers
             var userID = User.Identity.GetUserId();
             var position = new ReservationPosition(device, cartSession, userID);
             cartSession.Add(position);
-
+            
             if (!device.Type.IsInStock(cartSession))
             {
                 cartSession.Remove(position);

@@ -10,10 +10,11 @@ namespace Compactor.Models
         {
             if (type == null)
                 return false;
+
             int i = 0;
 
             if (!Utils.IsAny(positionsToCheck))
-                goto End;
+                return ElementAvailable(type, i);
 
             var list = positionsToCheck.Where(x => x.TypeID == type.ID);
 
@@ -22,8 +23,12 @@ namespace Compactor.Models
                 i += position.RentQuantity;
             }
 
-            End:
-            return type.TotalNumber >= type.BorrowedNumber+i;
-        }               
+            return ElementAvailable(type, i);
+        }
+
+        private static bool ElementAvailable(EquipmentType type, int i)
+        {
+            return type.TotalNumber >= type.BorrowedNumber + i;
+        }
     }
 }
